@@ -1,5 +1,7 @@
 package matveyeva.opr.frames;
 
+import matveyeva.opr.Solver;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,19 +15,21 @@ public class ConditionFrame extends JFrame {
     private JButton calculate;
     private JPanel condPanel;
     private JPanel butPanel;
+    private String problemType;
 
-
-
+    private int size;
     final private String[] conds = {">", "<", "=", "<=", ">="};
 
     public ConditionFrame(){}
 
-    public ConditionFrame(int size, String problem){
-        if(size <= 5) init(size, problem);
-        else initNoVis(size, problem);
+    public ConditionFrame(int varNum, String problem){
+        this.problemType = problem;
+        this.size = varNum;
+        if(size <= 5) init();
+        else initNoVis();
     }
 
-    private void init(int size, String problem) {
+    private void init() {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setLayout(null);
@@ -54,7 +58,7 @@ public class ConditionFrame extends JFrame {
     }
 
 
-    private void initNoVis(int size, String problem){
+    private void initNoVis(){
 
     }
 
@@ -90,10 +94,10 @@ public class ConditionFrame extends JFrame {
     private JComboBox[] printConditions(int size){
         JComboBox[] result = new JComboBox[size];
         for(int i = 0; i < size; i++){
-                JComboBox comboBox = new JComboBox(conds);
-                comboBox.setBounds( 60 * size, 20 + i* 35, 50, 25);
-                condPanel.add(comboBox);
-                result[i] = comboBox;
+            JComboBox comboBox = new JComboBox(conds);
+            comboBox.setBounds( 60 * size, 20 + i* 35, 50, 25);
+            condPanel.add(comboBox);
+            result[i] = comboBox;
         }
         return result;
     }
@@ -110,16 +114,16 @@ public class ConditionFrame extends JFrame {
     }
 
     private void setBackButton(JButton back){
-         back = new JButton("Назад");
-         back.setBounds(20,20, 90, 25);
-         butPanel.add(back);
+        back = new JButton("Назад");
+        back.setBounds(20,20, 90, 25);
+        butPanel.add(back);
 
-         back.addActionListener(new ActionListener() {
-             public void actionPerformed(ActionEvent actionEvent) {
-                 setVisible(false);
-                 MainFrame frame = new MainFrame();
-             }
-         });
+        back.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                setVisible(false);
+                MainFrame frame = new MainFrame();
+            }
+        });
     }
     private void setCalculateButton(JButton calculate) {
         calculate = new JButton("Расчет");
@@ -130,6 +134,8 @@ public class ConditionFrame extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 if(checkFields(odds,rightCol)){
                     System.out.println("CALCULATE");
+                    Solver solver = new Solver(size, odds, rightCol, conditions,problemType);
+                    System.out.println(solver.result);
                 }
 
             }

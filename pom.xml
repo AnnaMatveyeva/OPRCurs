@@ -10,9 +10,11 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.datumbox</groupId>
-            <artifactId>lpsolve</artifactId>
-            <version>5.5.2.0</version>
+            <groupId>lpsolver55j</groupId>
+            <artifactId>lpsolve55j</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/lpsolve55j.jar</systemPath>
+            <version>55</version>
         </dependency>
     </dependencies>
 </project>
