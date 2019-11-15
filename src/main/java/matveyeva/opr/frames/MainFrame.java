@@ -11,12 +11,13 @@ public class MainFrame extends JFrame{
     private JLabel numOfVar;
     private JButton next;
     private JTextField varsNum;
-    private JPanel panel;
     private int numOfVariables;
+    private int numOfConditions;
     private String toSolve;
+    private JLabel numOfCon;
+    private JTextField numOfCond;
 
     final String[] operations = {"Maximize","Minimize"};
-
 
     public MainFrame(){
         init();
@@ -25,7 +26,7 @@ public class MainFrame extends JFrame{
     private void init() {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(200, 200, 300, 150);
+        setBounds(200, 200, 300, 200);
         this.getContentPane().setLayout(null);
 
         next = new JButton("Далее");
@@ -33,43 +34,60 @@ public class MainFrame extends JFrame{
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
                     numOfVariables = Integer.parseInt(varsNum.getText());
+                    numOfConditions = Integer.parseInt(numOfCond.getText());
                     toSolve = operation.getSelectedItem().toString();
-                    if(checkNumOfVars(varsNum.getParent(), varsNum)) {
+                    if(checkNumOfVars(varsNum.getParent(), varsNum, numOfCond)) {
                         setVisible(false);
-                        ConditionFrame conditionFrame = new ConditionFrame(numOfVariables, toSolve);
-                    }
+                        ConditionFrame conditionFrame = new ConditionFrame(numOfVariables, toSolve, numOfConditions);
+                    }else System.out.println("Больше 5");
                 }catch (NumberFormatException ex){
                     JOptionPane.showMessageDialog(getComponent(0), "Заполните поля корректно!");
                     varsNum.setBackground(Color.RED);
                 }
             }
         });
-        next.setBounds(10,80,100,30);
+        next.setBounds(10,110,100,30);
+
         problem = new JLabel("Выбирите задачу:");
         problem.setBounds(10,10,200,30);
+
         numOfVar = new JLabel("Количество переменных:");
         numOfVar.setBounds(10,50,200,30);
+
         operation = new JComboBox(operations);
         operation.setBounds(170,10,110,30);
+
         varsNum = new JTextField("2");
         varsNum.setBounds(200,50,25,25);
+
+        numOfCon = new JLabel("Количество условий");
+        numOfCon.setBounds(10, 80, 200, 30);
+
+        numOfCond = new JTextField("2");
+        numOfCond.setBounds(200,80,25,25);
 
         this.getContentPane().add(problem);
         this.getContentPane().add(numOfVar);
         this.getContentPane().add(operation);
         this.getContentPane().add(varsNum);
         this.getContentPane().add(next);
+        this.getContentPane().add(numOfCon);
+        this.getContentPane().add(numOfCond);
+
         setVisible(true);
     }
 
-    private boolean checkNumOfVars(Container parent, JTextField textField){
+    private boolean checkNumOfVars(Container parent, JTextField numOfV,JTextField numOfC){
         boolean result = false;
-        int num = Integer.parseInt(textField.getText());
-
-        if(num <= 0){
+        int numOfVar = Integer.parseInt(numOfV.getText());
+        int numOfCond = Integer.parseInt(numOfC.getText());
+        if(numOfVar <= 0 ){
             JOptionPane.showMessageDialog(parent, "Количество переменных должно быть больше нуля");
-            textField.setBackground(Color.RED);
-        } else result = true;
+            numOfV.setBackground(Color.RED);
+        } else if(numOfCond <= 0){
+            JOptionPane.showMessageDialog(parent, "Количество условий должно быть больше нуля");
+            numOfC.setBackground(Color.RED);
+        }else result = true;
 
         return result;
     }
