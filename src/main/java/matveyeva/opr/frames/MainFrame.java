@@ -39,7 +39,11 @@ public class MainFrame extends JFrame{
                     if(checkNumOfVars(varsNum.getParent(), varsNum, numOfCond)) {
                         setVisible(false);
                         ConditionFrame conditionFrame = new ConditionFrame(numOfVariables, toSolve, numOfConditions);
-                    }else System.out.println("Больше 5");
+                    }else {
+                        FrameFromFile frameFromFile = new FrameFromFile();
+                        frameFromFile.setVisible(true);
+                        setVisible(false);
+                    }
                 }catch (NumberFormatException ex){
                     JOptionPane.showMessageDialog(getComponent(0), "Заполните поля корректно!");
                     varsNum.setBackground(Color.RED);
@@ -87,7 +91,7 @@ public class MainFrame extends JFrame{
         } else if(numOfCond <= 0){
             JOptionPane.showMessageDialog(parent, "Количество условий должно быть больше нуля");
             numOfC.setBackground(Color.RED);
-        }else result = true;
+        } else result = true;
 
         return result;
     }

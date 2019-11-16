@@ -28,8 +28,12 @@ public class ConditionFrame extends JFrame {
         this.problemType = problem;
         this.size = varNum;
         this.conSize = numOfConditions;
-        if(size <= 5) init();
-        else initNoVis();
+        if(size <= 5 && conSize <= 5) init();
+        else {
+            FrameFromFile frameFromFile = new FrameFromFile();
+            frameFromFile.setVisible(true);
+            setVisible(false);
+        }
     }
 
     private void init() {
@@ -60,11 +64,6 @@ public class ConditionFrame extends JFrame {
         this.getContentPane().add(butPanel);
         setBounds(300, 300, condPanel.getWidth() + butPanel.getWidth() + 10, condPanel.getHeight());
         setVisible(true);
-    }
-
-
-    private void initNoVis(){
-
     }
 
     private void printXs(int size, int conSize){
@@ -167,6 +166,9 @@ public class ConditionFrame extends JFrame {
                     System.out.println("CALCULATE");
                     Solver solver = new Solver(size, odds, rightCol, conditions,problemType, goalFunc, conSize);
                     System.out.println(solver.result);
+                    setVisible(false);
+                    ResultFrame resultFrame = new ResultFrame(solver.result, size);
+                    resultFrame.setVisible(true);
                 }
 
             }

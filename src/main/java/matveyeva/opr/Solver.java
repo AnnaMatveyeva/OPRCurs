@@ -4,11 +4,16 @@ package matveyeva.opr;
 import net.sf.javailp.*;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class Solver {
     private Problem problem;
     static final SolverFactory factory = new SolverFactoryLpSolve();
     public Result result;
+
+    public Solver(ArrayList<String> arr){
+
+    }
 
     public Solver(int size, JTextField[][] odds, JTextField[] rightCol, JComboBox[] conditions,
                   String problemType, JTextField[] goalFun, int conSize){
