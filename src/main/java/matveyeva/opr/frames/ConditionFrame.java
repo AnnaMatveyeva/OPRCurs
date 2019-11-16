@@ -63,7 +63,6 @@ public class ConditionFrame extends JFrame {
         this.getContentPane().add(condPanel);
         this.getContentPane().add(butPanel);
         setBounds(300, 300, condPanel.getWidth() + butPanel.getWidth() + 10, condPanel.getHeight());
-        setVisible(true);
     }
 
     private void printXs(int size, int conSize){

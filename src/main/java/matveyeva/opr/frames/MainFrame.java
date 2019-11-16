@@ -6,16 +6,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame{
+    private JButton next;
+    private JButton fromFile;
     private JComboBox operation;
     private JLabel problem;
+    private JLabel numOfCon;
     private JLabel numOfVar;
-    private JButton next;
+    private JTextField numOfCond;
     private JTextField varsNum;
     private int numOfVariables;
     private int numOfConditions;
     private String toSolve;
-    private JLabel numOfCon;
-    private JTextField numOfCond;
 
     final String[] operations = {"Maximize","Minimize"};
 
@@ -29,29 +30,8 @@ public class MainFrame extends JFrame{
         setBounds(200, 200, 300, 200);
         this.getContentPane().setLayout(null);
 
-        next = new JButton("Далее");
-        next.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                try {
-                    numOfVariables = Integer.parseInt(varsNum.getText());
-                    numOfConditions = Integer.parseInt(numOfCond.getText());
-                    toSolve = operation.getSelectedItem().toString();
-                    if(checkNumOfVars(varsNum.getParent(), varsNum, numOfCond)) {
-                        setVisible(false);
-                        ConditionFrame conditionFrame = new ConditionFrame(numOfVariables, toSolve, numOfConditions);
-                    }else {
-                        FrameFromFile frameFromFile = new FrameFromFile();
-                        frameFromFile.setVisible(true);
-                        setVisible(false);
-                    }
-                }catch (NumberFormatException ex){
-                    JOptionPane.showMessageDialog(getComponent(0), "Заполните поля корректно!");
-                    varsNum.setBackground(Color.RED);
-                }
-            }
-        });
-        next.setBounds(10,110,100,30);
-
+        setUpNext();
+        setUpFromFile();
         problem = new JLabel("Выбирите задачу:");
         problem.setBounds(10,10,200,30);
 
@@ -74,11 +54,35 @@ public class MainFrame extends JFrame{
         this.getContentPane().add(numOfVar);
         this.getContentPane().add(operation);
         this.getContentPane().add(varsNum);
-        this.getContentPane().add(next);
         this.getContentPane().add(numOfCon);
         this.getContentPane().add(numOfCond);
+    }
 
-        setVisible(true);
+    private void setUpNext() {
+        next = new JButton("Далее");
+        next.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                try {
+                    numOfVariables = Integer.parseInt(varsNum.getText());
+                    numOfConditions = Integer.parseInt(numOfCond.getText());
+                    toSolve = operation.getSelectedItem().toString();
+                    if(checkNumOfVars(varsNum.getParent(), varsNum, numOfCond)) {
+                        setVisible(false);
+                        ConditionFrame conditionFrame = new ConditionFrame(numOfVariables, toSolve, numOfConditions);
+                        conditionFrame.setVisible(true);
+                    }else {
+                        FrameFromFile frameFromFile = new FrameFromFile();
+                        frameFromFile.setVisible(true);
+                        setVisible(false);
+                    }
+                }catch (NumberFormatException ex){
+                    JOptionPane.showMessageDialog(getComponent(0), "Заполните поля корректно!");
+                    varsNum.setBackground(Color.RED);
+                }
+            }
+        });
+        next.setBounds(10,110,100,30);
+        this.getContentPane().add(next);
     }
 
     private boolean checkNumOfVars(Container parent, JTextField numOfV,JTextField numOfC){
@@ -94,6 +98,20 @@ public class MainFrame extends JFrame{
         } else result = true;
 
         return result;
+    }
+
+    private void setUpFromFile(){
+        fromFile = new JButton("Из файла");
+
+        fromFile.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                FrameFromFile frameFromFile = new FrameFromFile();
+                frameFromFile.setVisible(true);
+                setVisible(false);
+            }
+        });
+        fromFile.setBounds(120, 110, 100, 30);
+        this.getContentPane().add(fromFile);
     }
 
 }
