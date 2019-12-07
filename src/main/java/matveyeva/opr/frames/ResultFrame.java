@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ResultFrame extends JFrame {
 
@@ -17,7 +18,7 @@ public class ResultFrame extends JFrame {
     private JButton back;
     private JButton cancel;
     private int size;
-    private String[] results;
+    private ArrayList<String> results;
 
     public ResultFrame(){    }
 
@@ -54,8 +55,8 @@ public class ResultFrame extends JFrame {
                         BufferedWriter buf = new BufferedWriter(out);
 
                         int k = 0;
-                        for(int i = 0; i < results.length;i++){
-                            buf.write(results[i]+"\n");
+                        for(int i = 0; i < results.size();i++){
+                            buf.write(results.get(i)+"\n");
                             buf.flush();
 
                             buf.write("");
@@ -99,21 +100,34 @@ public class ResultFrame extends JFrame {
         JLabel label = new JLabel("Результат: ");
         label.setBounds(10, 10, 100, 30);
         this.getContentPane().add(label);
-        JLabel resF = new JLabel(splitResult(result)[0]);
+        JLabel resF = new JLabel(splitResult(result).get(0));
         resF.setBounds(10, 40, 300, 30);
 
-        JLabel resX = new JLabel(splitResult(result)[1]);
-        resX.setBounds(10, 60, 300, 30);
+        StringBuilder strB = new StringBuilder();
+        for(int i = 1; i< splitResult(result).size(); i++){
+            strB.append(splitResult(result).get(i));
+
+            if(i%3 == 0 || i == splitResult(result).size() - 1){
+                JLabel resX = new JLabel(strB.toString());
+                resX.setBounds(10, 30 + i*10, 300, 30);
+                this.getContentPane().add(resX);
+                strB = new StringBuilder();
+            }
+
+        }
+
 
         this.getContentPane().add(resF);
-        this.getContentPane().add(resX);
     }
 
-    private String[] splitResult(Result result){
+    private ArrayList<String> splitResult(Result result){
         String[] str = result.toString().split(":");
         String[] res = str[1].split(" ");
-        results = new String[]{"F(xn) = " + res[1] , "При " + res[2] + res[3]};
-
+        results = new ArrayList<String>();
+        results.add("F(xn) = " + res[1] + "; При");
+        for(int i = 2; i< res.length; i++){
+            results.add(res[i]);
+        }
         return results;
     }
 }

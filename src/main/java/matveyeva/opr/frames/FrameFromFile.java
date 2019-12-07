@@ -98,7 +98,7 @@ public class FrameFromFile extends JFrame {
     }
 
     private void setUpCalculate(){
-        calculate = new JButton("Расчитать");
+        calculate = new JButton("Рассчитать");
         calculate.setBounds(10, 100, 150, 30);
         this.getContentPane().add(calculate);
         calculate.setVisible(false);

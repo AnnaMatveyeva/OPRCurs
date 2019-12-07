@@ -151,6 +151,7 @@ public class ConditionFrame extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 setVisible(false);
                 MainFrame frame = new MainFrame();
+                frame.setVisible(true);
             }
         });
     }

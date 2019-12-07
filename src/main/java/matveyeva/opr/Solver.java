@@ -12,7 +12,6 @@ public class Solver {
     public Result result;
 
     public Solver(ArrayList<String> arr){
-
         problem = new Problem();
         Linear linear = new Linear();
         String[] goalFun = arr.get(2).split(" ");
@@ -85,7 +84,6 @@ public class Solver {
 
         net.sf.javailp.Solver solver = factory.get();
         result = solver.solve(problem);
-
     }
 
 }

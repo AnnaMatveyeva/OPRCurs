@@ -24,7 +24,7 @@ public class MainFrame extends JFrame{
         init();
     }
 
-    private void init() {
+    private void init()  {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(200, 200, 300, 200);
@@ -32,7 +32,7 @@ public class MainFrame extends JFrame{
 
         setUpNext();
         setUpFromFile();
-        problem = new JLabel("Выбирите задачу:");
+        problem = new JLabel("Выберите задачу:");
         problem.setBounds(10,10,200,30);
 
         numOfVar = new JLabel("Количество переменных:");
